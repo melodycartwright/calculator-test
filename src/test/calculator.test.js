@@ -33,4 +33,8 @@ describe('Division', () => {
         const result = calculator.divide(15, 3);
         expect(result).toBe(5);
     });
+    
+    test('If divided by 0, should throw an error', () => {
+        expect(() => calculator.divide (10, 0)).toThrow("Can't divide by zero");
+    });
 });
