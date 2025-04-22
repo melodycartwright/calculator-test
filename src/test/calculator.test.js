@@ -27,3 +27,10 @@ describe('Multiplication', () => {
         expect(result).toBe(10);
     });
 });
+
+describe('Division', () => {
+    test('15 / 3 should equal 5', () => {
+        const result = calculator.divide(15, 3);
+        expect(result).toBe(5);
+    });
+});
