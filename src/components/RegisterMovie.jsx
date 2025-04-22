@@ -18,8 +18,25 @@ export default function RegisterMovie() {
     return (
         <div>
         <h2>Register A New Movie</h2>
-        <form>
-            {}
+        <form onSubmit={(e) => e.preventDefault()}>
+            <h3>Login</h3>
+            <label>
+                Username:
+                <input 
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required />
+            </label>
+        <br />
+        <label>
+            Password:
+            <input type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+             />
+        </label>
         </form>
         {message && <p>{message}</p>}
         </div>
