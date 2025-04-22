@@ -13,3 +13,10 @@ describe('Addition', () => {
         expect (result).toBe(6)
     });
 });
+
+describe('Subtraction', () => {
+    test('10 - 4 will equal 6', () => {
+        const result = calculator.subtract (10, 4);
+        expect(result).toBe(6);
+    });
+});
