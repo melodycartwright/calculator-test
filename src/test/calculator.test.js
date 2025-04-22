@@ -20,3 +20,10 @@ describe('Subtraction', () => {
         expect(result).toBe(6);
     });
 });
+
+describe('Multiplication', () => {
+    test('5 * 2 should equal 10', () => {
+        const result = calculator.multiply(5, 2);
+        expect(result).toBe(10);
+    });
+});
