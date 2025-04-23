@@ -37,6 +37,23 @@ export default function RegisterMovie() {
             required
              />
         </label>
+
+        <h3>Movie Info</h3>
+        <label>
+            Title:
+            <input type="text"
+             value= {title}
+             onChange= {(e) => setTitle(e.target.value)}
+             required />
+        </label>
+        <br />
+        <label>
+            Production Year:
+            <input type="number"
+            value= {productionYear}
+            onChange= {(e) => setProductionYear(e.target.value)}
+            required />
+        </label>
         </form>
         {message && <p>{message}</p>}
         </div>
