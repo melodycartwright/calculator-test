@@ -54,6 +54,22 @@ export default function RegisterMovie() {
             onChange= {(e) => setProductionYear(e.target.value)}
             required />
         </label>
+        <br />
+        <label>
+            Description:
+            <textarea
+             value={description}
+             onChange= {(e) => setDescription(e.target.value)}
+             required />
+        </label>
+        <br />
+        <label>
+            Director:
+            <input type="text"
+            value={director}
+            onChange={(e) => setDirector(e.target.value)}
+            required />
+        </label>
         </form>
         {message && <p>{message}</p>}
         </div>
