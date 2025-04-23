@@ -70,6 +70,8 @@ export default function RegisterMovie() {
             onChange={(e) => setDirector(e.target.value)}
             required />
         </label>
+        <br />
+        <button type="submit" onClick={handleSubmit}>Add Movie</button>
         </form>
         {message && <p>{message}</p>}
         </div>
