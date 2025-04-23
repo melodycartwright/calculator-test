@@ -15,6 +15,34 @@ export default function RegisterMovie() {
     const [director, setDirector] = useState('');
     const [message, setMessage] = useState('');
 
+const handleSubmit = async (e) => { e.preventDefault();
+    setMessage('');
+    try {
+        const token = await loginUser(username, password);
+        const movieData= {
+            title,
+            productionYear: Number(productionYear),
+            description,
+            director
+        };
+              const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      };
+
+
+      const response = await axios.post(`${API_BASE_URL}/movies`, movieData, { headers });
+
+
+      if (response.status === 201) {
+        setMessage('Movie registered!');
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage('Something went wrong. Please try again.');
+    }
+  };
+
     return (
         <div>
         <h2>Register A New Movie</h2>
@@ -75,5 +103,4 @@ export default function RegisterMovie() {
         </form>
         {message && <p>{message}</p>}
         </div>
-    );
-}
+    );}
