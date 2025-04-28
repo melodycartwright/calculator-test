@@ -49,6 +49,12 @@ export default function RegisterMovie() {
     }
   };
 
+  const handleLogout = () => {
+    setToken("");
+    localStorage.removeItem("jwtToken");
+    setMessage("Logged out successfully.");
+  };
+
   const handleSubmitMovie = async (e) => {
     e.preventDefault();
     setMessage("");
@@ -118,6 +124,7 @@ export default function RegisterMovie() {
 
       {token && (
         <>
+          <button onClick={handleLogout}>Logout</button>
           <h2>Register a New Movie</h2>
           <form onSubmit={handleSubmitMovie}>
             <div>
