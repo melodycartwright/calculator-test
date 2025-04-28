@@ -1,4 +1,5 @@
 import RegisterMovie from "./components/RegisterMovie"
+import MovieList from "./components/MovieList"
 
 function App() {
  
@@ -6,11 +7,12 @@ function App() {
   return (
     <>
       <div>
-<RegisterMovie/>
+<RegisterMovie />
+<MovieList />
       </div>
   
     </>
-  )
+  );
 }
 
 export default App
