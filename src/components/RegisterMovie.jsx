@@ -38,6 +38,7 @@ export default function RegisterMovie() {
 
       if (receivedToken) {
         setToken(receivedToken);
+        localStorage.setItem("jwtToken", receivedToken);
         setMessage("Login successful! You can now register a movie.");
       } else {
         setMessage("Login failed. No token received.");
