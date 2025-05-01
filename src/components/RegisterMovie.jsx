@@ -65,6 +65,30 @@ export default function RegisterMovie({ token, setToken, onMovieAdded }) {
     e.preventDefault();
     setMessage("");
 
+    const trimmedTitle = title.trim();
+    const trimmedDescription = description.trim();
+    const trimmedDirector = director.trim();
+    const trimmedYear = productionYear.trim();
+    const year = Number(trimmedYear);
+    const currentYear = new Date().getFullYear();
+
+    if (
+      !trimmedTitle ||
+      !trimmedDescription ||
+      !trimmedDirector ||
+      !trimmedYear
+    ) {
+      setMessage("All fields are required.");
+      return;
+    }
+
+    if (isNaN(year) || year < 1900 || year > currentYear) {
+      setMessage(
+        `Production year must be a number between 1900 and ${currentYear}.`
+      );
+      return;
+    }
+
     try {
       if (!token) {
         setMessage("You must be logged in to register a movie.");
@@ -72,10 +96,10 @@ export default function RegisterMovie({ token, setToken, onMovieAdded }) {
       }
 
       const movieData = {
-        title: title.trim(),
-        productionYear: Number(productionYear.trim()),
-        description: description.trim(),
-        director: director.trim(),
+        title: trimmedTitle,
+        productionYear: year,
+        description: trimmedDescription,
+        director: trimmedDirector,
       };
 
       console.log("Sending movie data:", movieData);
@@ -91,15 +115,16 @@ export default function RegisterMovie({ token, setToken, onMovieAdded }) {
 
       if (response.status === 201) {
         setMessage("Movie registered successfully!");
-      
         setTitle("");
         setProductionYear("");
         setDescription("");
         setDirector("");
-      
+
         if (onMovieAdded) {
           onMovieAdded();
         }
+      } else if (response.status === 400) {
+        setMessage("API rejected the request. Please check your input values.");
       } else {
         setMessage("Failed to register movie.");
       }
@@ -149,7 +174,9 @@ export default function RegisterMovie({ token, setToken, onMovieAdded }) {
             }}
           >
             <h2>Welcome, {username}</h2>
-            <button onClick={handleLogout}>Logout</button>
+            <button className="logout" onClick={handleLogout}>
+              Logout
+            </button>
           </div>
 
           <h2>Register a New Movie</h2>
