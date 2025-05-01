@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import RegisterMovie from "./components/RegisterMovie";
 import MovieList from "./components/MovieList";
 
+
 function App() {
   const [token, setToken] = useState("");
 
@@ -14,7 +15,7 @@ function App() {
   }, []);
 
   return (
-    <div className="container" style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
+    <div className="container" >
       <h1>Movie Registration System</h1>
       <RegisterMovie token={token} setToken={setToken} />
       <MovieList token={token} />

@@ -11,7 +11,6 @@ export default function RegisterMovie({ token, setToken }) {
   const [director, setDirector] = useState("");
   const [message, setMessage] = useState("");
 
-  // Check for token in localStorage on component mount
   useEffect(() => {
     const storedToken = localStorage.getItem("jwtToken");
     if (storedToken && !token) {
@@ -146,7 +145,9 @@ export default function RegisterMovie({ token, setToken }) {
             }}
           >
             <h2>Welcome, {username}</h2>
-            <button onClick={handleLogout}>Logout</button>
+            <button className="logout" onClick={handleLogout}>
+              Logout
+            </button>
           </div>
 
           <h2>Register a New Movie</h2>
