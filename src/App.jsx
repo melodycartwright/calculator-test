@@ -9,8 +9,8 @@ function App() {
   return (
     <>
       <div>
-<RegisterMovie />
-<MovieList />
+<RegisterMovie token={token} setToken={setToken} />
+<MovieList token={token} />
       </div>
   
     </>

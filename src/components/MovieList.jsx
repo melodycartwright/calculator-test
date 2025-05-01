@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 
 const API_BASE_URL = "https://tokenservice-jwt-2025.fly.dev";
 
-export default function MovieList() {
+export default function MovieList({ token }) {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-
-  const token = localStorage.getItem("jwtToken"); //MAy need to be fixed in a bit
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -17,9 +15,11 @@ export default function MovieList() {
             Authorization: `Bearer ${token}`,
           },
         });
+
         if (!response.ok) {
           throw new Error("Failed to fetch movies");
         }
+
         const data = await response.json();
         setMovies(data);
       } catch (err) {
@@ -28,10 +28,14 @@ export default function MovieList() {
         setLoading(false);
       }
     };
+
     if (token) {
       fetchMovies();
+    } else {
+      setMovies([]); // if no token, clear movies
+      setLoading(false);
     }
-  }, [token]);
+  }, [token]); // <--- very important!
 
   return (
     <div>

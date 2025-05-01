@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const API_BASE_URL = "https://tokenservice-jwt-2025.fly.dev";
 
-export default function RegisterMovie() {
+export default function RegisterMovie({ token, setToken }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
   const [title, setTitle] = useState("");
   const [productionYear, setProductionYear] = useState("");
   const [description, setDescription] = useState("");
   const [director, setDirector] = useState("");
   const [message, setMessage] = useState("");
+
+  // Check for token in localStorage on component mount
+  useEffect(() => {
+    const storedToken = localStorage.getItem("jwtToken");
+    if (storedToken && !token) {
+      setToken(storedToken);
+    }
+  }, [token, setToken]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -85,6 +92,11 @@ export default function RegisterMovie() {
 
       if (response.status === 201) {
         setMessage("Movie registered successfully!");
+        // Clear form fields after successful submission
+        setTitle("");
+        setProductionYear("");
+        setDescription("");
+        setDirector("");
       } else {
         setMessage("Failed to register movie.");
       }
@@ -96,35 +108,47 @@ export default function RegisterMovie() {
 
   return (
     <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            id="username"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <br />
-        <button type="submit">Login</button>
-      </form>
-
-      {token && (
+      {!token ? (
         <>
-          <button onClick={handleLogout}>Logout</button>
+          <h2>Login</h2>
+          <form onSubmit={handleLogin}>
+            <div>
+              <label htmlFor="username">Username:</label>
+              <input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="password">Password:</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <br />
+            <button type="submit">Login</button>
+          </form>
+        </>
+      ) : (
+        <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <h2>Welcome, {username}</h2>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+
           <h2>Register a New Movie</h2>
           <form onSubmit={handleSubmitMovie}>
             <div>
