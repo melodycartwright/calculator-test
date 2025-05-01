@@ -5,10 +5,14 @@ const API_BASE_URL = "https://tokenservice-jwt-2025.fly.dev";
 export default function MovieList({ token }) {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchMovies = async () => {
+      // Only fetch if we have a token
+      if (!token) return;
+
+      setLoading(true);
       try {
         const response = await fetch(`${API_BASE_URL}/movies`, {
           headers: {
@@ -29,23 +33,23 @@ export default function MovieList({ token }) {
       }
     };
 
-    if (token) {
-      fetchMovies();
-    } else {
-      setMovies([]); // if no token, clear movies
-      setLoading(false);
-    }
-  }, [token]); // <--- very important!
+    fetchMovies();
+  }, [token]); // Re-fetch when token changes
+
+  // Don't render anything if there's no token
+  if (!token) {
+    return null;
+  }
 
   return (
     <div>
       <h2>Movie List</h2>
-      {!token ? (
-        <p>Please log in to view movies.</p>
-      ) : loading ? (
+      {loading ? (
         <p>Loading movies...</p>
       ) : error ? (
         <p style={{ color: "red" }}>{error}</p>
+      ) : movies.length === 0 ? (
+        <p>No movies found. Register your first movie!</p>
       ) : (
         <ul>
           {movies.map((movie) => (
