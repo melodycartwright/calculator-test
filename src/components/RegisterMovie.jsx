@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const API_BASE_URL = "https://tokenservice-jwt-2025.fly.dev";
 
-export default function RegisterMovie({ token, setToken }) {
+export default function RegisterMovie({ token, setToken, onMovieAdded }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
@@ -91,11 +91,15 @@ export default function RegisterMovie({ token, setToken }) {
 
       if (response.status === 201) {
         setMessage("Movie registered successfully!");
-        // Clear form fields after successful submission
+      
         setTitle("");
         setProductionYear("");
         setDescription("");
         setDirector("");
+      
+        if (onMovieAdded) {
+          onMovieAdded();
+        }
       } else {
         setMessage("Failed to register movie.");
       }
@@ -145,9 +149,7 @@ export default function RegisterMovie({ token, setToken }) {
             }}
           >
             <h2>Welcome, {username}</h2>
-            <button className="logout" onClick={handleLogout}>
-              Logout
-            </button>
+            <button onClick={handleLogout}>Logout</button>
           </div>
 
           <h2>Register a New Movie</h2>
