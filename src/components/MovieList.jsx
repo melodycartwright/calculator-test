@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 
 const API_BASE_URL = "https://tokenservice-jwt-2025.fly.dev";
 
-export default function MovieList({ token }) {
+export default function MovieList({ token, refresh }) {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchMovies = async () => {
-      // Only fetch if we have a token
+   
       if (!token) return;
 
       setLoading(true);
@@ -34,9 +34,9 @@ export default function MovieList({ token }) {
     };
 
     fetchMovies();
-  }, [token]); // Re-fetch when token changes
+  }, [token, refresh]); 
 
-  // Don't render anything if there's no token
+ 
   if (!token) {
     return null;
   }

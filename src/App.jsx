@@ -16,7 +16,7 @@ function App() {
 
 
   const handleMovieAdded = () => {
-    setRefreshMovies((prev) => !prev); // Toggle to trigger useEffect in MovieList
+    setRefreshMovies((prev) => !prev);
   };
 
   return (
